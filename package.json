@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "A CLI dashboard for Glesys servers",
   "homepage": "https://github.com/kokarn/glesys-cli-dashboard",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "install": "node credentials.js"
+    "install": "node lib/credentials.js"
   },
   "repository": {
     "type": "git",
