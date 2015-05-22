@@ -1,0 +1,38 @@
+{
+  "name": "glesys-cli-dashboard",
+  "version": "1.0.0",
+  "description": "A CLI dashboard for Glesys servers",
+  "homepage": "https://github.com/kokarn/glesys-cli-dashboard",
+  "main": "index.js",
+  "scripts": {
+    "install": "node credentials.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kokarn/GleSys-CLI-Dashboard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kokarn/glesys-cli-dashboard/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/kokarn/glesys-cli-dashboard/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "author": {
+    "name": "Oskar Risberg",
+    "email": "kokarn@gmail.com"
+  },
+  "dependencies": {
+    "blessed": "^0.1.60",
+    "blessed-contrib": "^2.0.5",
+    "chalk": "^1.0.0",
+    "moment": "^2.10.3",
+    "readline-sync": "^1.2.15",
+    "request": "^2.55.0"
+  }
+}
