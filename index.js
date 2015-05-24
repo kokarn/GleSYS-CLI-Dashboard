@@ -15,6 +15,7 @@ var blessed = require( 'blessed'),
     responses = grid.set( gridValues.gridRows - gridValues.responsTimeHeight, 0, gridValues.responsTimeHeight, gridValues.gridColumns, contrib.line, {
         label: 'GleSys API Response in ms',
         wholeNumbersOnly: true,
+    }),
     infoMessage = grid.set( 0, 0, 2, gridValues.gridColumns, blessed.text, {
         align: 'center',
         hidden: true,
@@ -22,6 +23,8 @@ var blessed = require( 'blessed'),
             fg: 'red'
         }
     }),
+    loadingIndicator = grid.set( Math.floor( ( gridValues.gridRows - 2 ) / 2 ), Math.floor( ( gridValues.gridColumns - 2 ) / 2 ), 2, 2, blessed.loading, {
+        align: 'center'
     }),
     servers,
     serverWidgets = {};
@@ -118,9 +121,11 @@ screen.key([ 'escape', 'q', 'C-c' ], function( ch, key ) {
     return process.exit( 0 );
 });
 
+loadingIndicator.load( 'Loading server list' );
 screen.render();
 
 glesys.getServerList( function( data ){
+    loadingIndicator.stop();
 
     if( data.status !== undefined && data.status == 'failed' ){
         setErrorMessage( data.message );
