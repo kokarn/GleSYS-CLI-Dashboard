@@ -120,10 +120,15 @@ screen.key([ 'escape', 'q', 'C-c' ], function( ch, key ) {
 
 screen.render();
 
-glesys.getServerList( function( serverList ){
-    servers = serverList;
+glesys.getServerList( function( data ){
 
-    setInterval( updateServers, 2000 );
+    if( data.status !== undefined && data.status == 'failed' ){
+        setErrorMessage( data.message );
+    } else {
+        servers = data;
 
-    setResponstimes();
+        setInterval( updateServers, 2000 );
+
+        setResponstimes();
+    }
 });

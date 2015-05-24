@@ -20,12 +20,12 @@ module.exports = {
     maxResponetimesStored: 3600,
     loadPath: function( path, callback, parameters ){
         var options = {
-            'url': this.buildUrl( path, parameters ),
-            'json': true
-        },
-        _this = this,
-        starttime = new Date().getTime(),
-        endtime = 0;
+                url: this.buildUrl( path, parameters ),
+                json: true
+            },
+            _this = this,
+            starttime = new Date().getTime(),
+            endtime = 0;
 
         return request( options , function( error, response, body ){
             var timeLabel = moment().format( 'HH:mm:ss' );
@@ -44,8 +44,16 @@ module.exports = {
 
             _this.responsetimes = _this.responsetimes.slice( - _this.maxResponetimesStored );
 
-            if( !error && response.statusCode == 200 ){
+            if( error ){
+               console.log( error );
+               console.log( response );
+            } else if( response.statusCode == 200 ){
                 callback.call( _this, body );
+            } else if( response.statusCode == 401 ){
+                callback.call( _this, {
+                    status: 'failed',
+                    message: body.response.status.text
+                });
             }
         });
     },
@@ -62,8 +70,15 @@ module.exports = {
     },
     getServerList: function( callback ){
         this.loadPath( 'server/list', function( data ){
-            this.servers = data.response.servers;
-            callback.call( this, this.servers );
+            var responseData;
+            if( data.response !== undefined && data.response.servers !== undefined ){
+                this.servers = data.response.servers;
+                responseData = this.servers;
+            } else {
+                responseData = data;
+            }
+
+            callback.call( this, responseData );
         } );
     },
     getServerStatus: function( server, callback ){
