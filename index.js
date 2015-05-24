@@ -14,7 +14,7 @@ var blessed = require( 'blessed'),
     }),
     responses = grid.set( gridValues.gridRows - gridValues.responsTimeHeight, 0, gridValues.responsTimeHeight, gridValues.gridColumns, contrib.line, {
         label: 'GleSys API Response in ms',
-        wholeNumbersOnly: true,
+        wholeNumbersOnly: true
     }),
     infoMessage = grid.set( 0, 0, 2, gridValues.gridColumns, blessed.text, {
         align: 'center',
