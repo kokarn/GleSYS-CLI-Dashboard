@@ -17,7 +17,7 @@ module.exports = {
     account: settings.glesysAccount,
     servers: [],
     responsetimes : [],
-    maxResponetimesStored: 3600,
+    maxResponetimesStored: 900, // Should be about 15 minutes
     loadPath: function( path, callback, parameters ){
         var options = {
                 url: this.buildUrl( path, parameters ),
