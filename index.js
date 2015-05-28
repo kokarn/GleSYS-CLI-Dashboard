@@ -132,7 +132,9 @@ glesys.getServerList( function( data ){
     } else {
         servers = data;
 
-        setInterval( updateServers, 2000 );
+        updateServers();
+        // This data is apparently cached for a minute
+        setInterval( updateServers, 60000 );
 
         setResponstimes();
     }

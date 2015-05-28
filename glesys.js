@@ -17,7 +17,7 @@ module.exports = {
     account: settings.glesysAccount,
     servers: [],
     responsetimes : [],
-    maxResponetimesStored: 900, // Should be about 15 minutes
+    maxResponetimesStored: 360, // 6 hours
     loadPath: function( path, callback, parameters ){
         var options = {
                 url: this.buildUrl( path, parameters ),
@@ -28,7 +28,7 @@ module.exports = {
             endtime = 0;
 
         return request( options , function( error, response, body ){
-            var timeLabel = moment().format( 'HH:mm:ss' );
+            var timeLabel = moment().format( 'HH:mm' );
             endtime = new Date().getTime();
 
             if( !_this.responsetimes.some(
