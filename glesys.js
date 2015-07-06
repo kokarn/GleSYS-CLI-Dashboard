@@ -21,7 +21,8 @@ module.exports = {
     loadPath: function( path, callback, parameters ){
         var options = {
                 url: this.buildUrl( path, parameters ),
-                json: true
+                json: true,
+                timeout: 5000
             },
             _this = this,
             starttime = new Date().getTime(),
