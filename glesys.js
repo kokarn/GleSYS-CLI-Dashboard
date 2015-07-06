@@ -30,31 +30,34 @@ module.exports = {
 
         return request( options , function( error, response, body ){
             var timeLabel = moment().format( 'HH:mm' );
-            endtime = new Date().getTime();
-
-            if( !_this.responsetimes.some(
-                function( element ){
-                    return element.label == timeLabel;
-                })
-            ){
-                _this.responsetimes.push( {
-                    label: timeLabel,
-                    data: endtime - starttime
-                });
-            }
-
-            _this.responsetimes = _this.responsetimes.slice( - _this.maxResponetimesStored );
 
             if( error ){
-               console.log( error );
-               console.log( response );
-            } else if( response.statusCode == 200 ){
-                callback.call( _this, body );
-            } else if( response.statusCode == 401 ){
-                callback.call( _this, {
-                    status: 'failed',
-                    message: body.response.status.text
-                });
+                // Handle errors perpahs?
+                console.log( error ); 
+           } else {
+               endtime = new Date().getTime();
+
+               if( !_this.responsetimes.some(
+                   function( element ){
+                       return element.label == timeLabel;
+                   })
+               ){
+                   _this.responsetimes.push( {
+                       label: timeLabel,
+                       data: endtime - starttime
+                   });
+               }
+
+               _this.responsetimes = _this.responsetimes.slice( - _this.maxResponetimesStored );
+
+                if( response.statusCode == 200 ){
+                    callback.call( _this, body );
+                } else if( response.statusCode == 401 ){
+                    callback.call( _this, {
+                        status: 'failed',
+                        message: body.response.status.text
+                    });
+                }
             }
         });
     },
