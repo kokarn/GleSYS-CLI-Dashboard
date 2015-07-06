@@ -4,8 +4,8 @@ var blessed = require( 'blessed'),
     screen = blessed.screen(),
     gridValues = {
         gridRows: 15,
-        gridColumns: 15,
-        serverWidgetWidth: 3,
+        gridColumns: 14,
+        serverWidgetWidth: 2,
         serverWidgetHeight: 3,
         responsTimeHeight: 3
     },
