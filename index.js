@@ -36,7 +36,7 @@ function setErrorMessage( message ){
     screen.render();
 }
 
-function setResponstimes(){
+function setResponsetimes(){
     var keys = [],
         values = [],
         i;
@@ -110,7 +110,7 @@ function updateServers(){
 
             screen.render();
 
-            setResponstimes();
+            setResponsetimes();
         });
     });
 
@@ -136,6 +136,6 @@ glesys.getServerList( function( data ){
         // This data is apparently cached for a minute
         setInterval( updateServers, 60000 );
 
-        setResponstimes();
+        setResponsetimes();
     }
 });
