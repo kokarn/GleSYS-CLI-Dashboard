@@ -8,7 +8,10 @@ var readline = require( 'readline-sync' ),
     updateSettings = false,
     requiredSettings = {
         glesysApiKey : 'What is your API key? ',
-        glesysAccount : 'What is your account id? '
+        glesysAccount : 'What is your account id? ',
+        serverUsername : 'What server username should we use to connect? ',
+        serverPassword : 'What is the password for the accounts? ',
+        serverMainDomainname : 'What is the main domain for the servers? '
     };
 
 function writeData( file ){

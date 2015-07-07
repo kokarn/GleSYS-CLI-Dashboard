@@ -33,7 +33,10 @@ module.exports = {
 
             if( error ){
                 // Handle errors perpahs?
-                console.log( error ); 
+                // Right now we don't wanna do anything with this, we just want
+                // to wait for the next request and hope that doesn't fail
+                
+                //console.log( error );
            } else {
                endtime = new Date().getTime();
 

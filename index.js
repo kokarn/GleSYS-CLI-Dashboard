@@ -1,18 +1,21 @@
 var blessed = require( 'blessed'),
     contrib = require( 'blessed-contrib'),
     glesys = require( './glesys.js' ),
+    remotelog = require( './remotelog.js' ),
     screen = blessed.screen(),
     gridValues = {
         gridRows: 15,
         gridColumns: 14,
         serverWidgetWidth: 2,
         serverWidgetHeight: 3,
-        responsTimeHeight: 3
+        responseTimeHeight: 3,
+        responseTimeWidth: 4,
+        errorLogHeight: 3
     },
     grid = new contrib.grid({
         rows: gridValues.gridRows, cols: gridValues.gridColumns, screen: screen
     }),
-    responses = grid.set( gridValues.gridRows - gridValues.responsTimeHeight, 0, gridValues.responsTimeHeight, gridValues.gridColumns, contrib.line, {
+    responses = grid.set( gridValues.gridRows - gridValues.responseTimeHeight, gridValues.gridColumns - gridValues.responseTimeWidth, gridValues.responseTimeHeight, gridValues.responseTimeWidth, contrib.line, {
         label: 'GleSys API Response in ms',
         wholeNumbersOnly: true
     }),
@@ -23,11 +26,23 @@ var blessed = require( 'blessed'),
             fg: 'red'
         }
     }),
+    errorLog = grid.set( gridValues.gridRows - gridValues.responseTimeHeight, 0, gridValues.errorLogHeight, gridValues.gridColumns - gridValues.responseTimeWidth, contrib.log, {
+        fg: 'green',
+        selectedFg: 'green',
+        label: 'Server Error log'
+    }),
     loadingIndicator = grid.set( Math.floor( ( gridValues.gridRows - 2 ) / 2 ), Math.floor( ( gridValues.gridColumns - 2 ) / 2 ), 2, 2, blessed.loading, {
         align: 'center'
     }),
     servers,
     serverWidgets = {};
+
+try {
+    var settings = require( './settings.js' );
+} catch( error ){
+    console.log( chalk.red( 'Failed to load settings. Please run "node credentials.js" ' ) );
+    process.exit();
+}
 
 function setErrorMessage( message ){
     infoMessage.setText( message );
@@ -138,4 +153,19 @@ glesys.getServerList( function( data ){
 
         setResponsetimes();
     }
+
+    servers.forEach( function( serverData, index ){
+        var logger = new remotelog();
+
+        logger.serverName = serverData.hostname;
+        logger.domain = settings.serverMainDomainname
+        logger.username = settings.serverUsername;
+        logger.password = settings.serverPassword;
+        logger.callbackMethod = function( message ){
+            errorLog.log( message );
+            screen.render();
+        };
+
+        logger.connect();
+    });
 });
