@@ -1,20 +1,12 @@
 'use strict';
 var request = require( 'request' ),
     moment = require( 'moment' ),
-    chalk = require( 'chalk' ),
-    settings;
-
-try {
-    settings = require( './../settings.js' );
-} catch( error ){
-    console.log( chalk.red( 'Failed to load settings. Please run "node credentials.js" ' ) );
-    process.exit();
-}
+    chalk = require( 'chalk' );
 
 module.exports = {
     apiBase: 'api.glesys.com/',
-    apiKey: settings.glesysApiKey,
-    account: settings.glesysAccount,
+    apiKey: false,
+    account: false,
     servers: [],
     responsetimes : [],
     maxResponetimesStored: 360, // 6 hours

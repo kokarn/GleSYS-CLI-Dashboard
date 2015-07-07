@@ -139,6 +139,9 @@ screen.key([ 'escape', 'q', 'C-c' ], function( ch, key ) {
 loadingIndicator.load( 'Loading server list' );
 screen.render();
 
+glesys.apiKey = settings.glesysApiKey;
+glesys.account = settings.glesysAccount;
+
 glesys.getServerList( function( data ){
     loadingIndicator.stop();
 
