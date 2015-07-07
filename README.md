@@ -13,3 +13,8 @@ cd glesys-cli-dashboard
 npm install
 node index.js
 ```
+
+## Requirements
+For the remote log feature to work, each server must fulfill these requirements:
+* A user with the same name and password must exist on each server
+* Each server must be available under the same domainname
