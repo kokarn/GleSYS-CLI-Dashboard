@@ -40,7 +40,7 @@ var blessed = require( 'blessed'),
 try {
     var settings = require( './settings.js' );
 } catch( error ){
-    console.log( chalk.red( 'Failed to load settings. Please run "node credentials.js" ' ) );
+    console.log( chalk.red( 'Failed to load settings. Please run "node credentials.js"' ) );
     process.exit();
 }
 
@@ -132,7 +132,7 @@ function updateServers(){
     screen.render();
 }
 
-screen.key([ 'escape', 'q', 'C-c' ], function( ch, key ) {
+screen.key( [ 'escape', 'q', 'C-c' ], function( ch, key ) {
     return process.exit( 0 );
 });
 
