@@ -1,7 +1,6 @@
 'use strict';
 var request = require( 'request' ),
-    moment = require( 'moment' ),
-    chalk = require( 'chalk' );
+    moment = require( 'moment' );
 
 module.exports = {
     apiBase: 'api.glesys.com/',
