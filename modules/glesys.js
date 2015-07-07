@@ -1,20 +1,11 @@
 'use strict';
 var request = require( 'request' ),
-    moment = require( 'moment' ),
-    chalk = require( 'chalk' ),
-    settings;
-
-try {
-    settings = require( './settings.js' );
-} catch( error ){
-    console.log( chalk.red( 'Failed to load settings. Please run "node credentials.js" ' ) );
-    process.exit();
-}
+    moment = require( 'moment' );
 
 module.exports = {
     apiBase: 'api.glesys.com/',
-    apiKey: settings.glesysApiKey,
-    account: settings.glesysAccount,
+    apiKey: false,
+    account: false,
     servers: [],
     responsetimes : [],
     maxResponetimesStored: 360, // 6 hours
@@ -35,7 +26,7 @@ module.exports = {
                 // Handle errors perpahs?
                 // Right now we don't wanna do anything with this, we just want
                 // to wait for the next request and hope that doesn't fail
-                
+
                 //console.log( error );
            } else {
                endtime = new Date().getTime();

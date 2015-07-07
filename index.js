@@ -1,7 +1,7 @@
 var blessed = require( 'blessed'),
     contrib = require( 'blessed-contrib'),
-    glesys = require( './glesys.js' ),
-    remotelog = require( './remotelog.js' ),
+    glesys = require( './modules/glesys.js' ),
+    remotelog = require( './modules/remotelog.js' ),
     screen = blessed.screen(),
     gridValues = {
         gridRows: 15,
@@ -40,7 +40,7 @@ var blessed = require( 'blessed'),
 try {
     var settings = require( './settings.js' );
 } catch( error ){
-    console.log( chalk.red( 'Failed to load settings. Please run "node credentials.js" ' ) );
+    console.log( chalk.red( 'Failed to load settings. Please run "node credentials.js"' ) );
     process.exit();
 }
 
@@ -132,12 +132,15 @@ function updateServers(){
     screen.render();
 }
 
-screen.key([ 'escape', 'q', 'C-c' ], function( ch, key ) {
+screen.key( [ 'escape', 'q', 'C-c' ], function( ch, key ) {
     return process.exit( 0 );
 });
 
 loadingIndicator.load( 'Loading server list' );
 screen.render();
+
+glesys.apiKey = settings.glesysApiKey;
+glesys.account = settings.glesysAccount;
 
 glesys.getServerList( function( data ){
     loadingIndicator.stop();
