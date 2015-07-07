@@ -1,7 +1,7 @@
 var blessed = require( 'blessed'),
     contrib = require( 'blessed-contrib'),
-    glesys = require( './glesys.js' ),
-    remotelog = require( './remotelog.js' ),
+    glesys = require( './modules/glesys.js' ),
+    remotelog = require( './modules/remotelog.js' ),
     screen = blessed.screen(),
     gridValues = {
         gridRows: 15,

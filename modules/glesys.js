@@ -5,7 +5,7 @@ var request = require( 'request' ),
     settings;
 
 try {
-    settings = require( './settings.js' );
+    settings = require( './../settings.js' );
 } catch( error ){
     console.log( chalk.red( 'Failed to load settings. Please run "node credentials.js" ' ) );
     process.exit();
@@ -35,7 +35,7 @@ module.exports = {
                 // Handle errors perpahs?
                 // Right now we don't wanna do anything with this, we just want
                 // to wait for the next request and hope that doesn't fail
-                
+
                 //console.log( error );
            } else {
                endtime = new Date().getTime();
