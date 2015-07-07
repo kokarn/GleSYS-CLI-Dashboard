@@ -21,7 +21,8 @@ module.exports = {
     loadPath: function( path, callback, parameters ){
         var options = {
                 url: this.buildUrl( path, parameters ),
-                json: true
+                json: true,
+                timeout: 5000
             },
             _this = this,
             starttime = new Date().getTime(),
@@ -29,31 +30,37 @@ module.exports = {
 
         return request( options , function( error, response, body ){
             var timeLabel = moment().format( 'HH:mm' );
-            endtime = new Date().getTime();
-
-            if( !_this.responsetimes.some(
-                function( element ){
-                    return element.label == timeLabel;
-                })
-            ){
-                _this.responsetimes.push( {
-                    label: timeLabel,
-                    data: endtime - starttime
-                });
-            }
-
-            _this.responsetimes = _this.responsetimes.slice( - _this.maxResponetimesStored );
 
             if( error ){
-               console.log( error );
-               console.log( response );
-            } else if( response.statusCode == 200 ){
-                callback.call( _this, body );
-            } else if( response.statusCode == 401 ){
-                callback.call( _this, {
-                    status: 'failed',
-                    message: body.response.status.text
-                });
+                // Handle errors perpahs?
+                // Right now we don't wanna do anything with this, we just want
+                // to wait for the next request and hope that doesn't fail
+                
+                //console.log( error );
+           } else {
+               endtime = new Date().getTime();
+
+               if( !_this.responsetimes.some(
+                   function( element ){
+                       return element.label == timeLabel;
+                   })
+               ){
+                   _this.responsetimes.push( {
+                       label: timeLabel,
+                       data: endtime - starttime
+                   });
+               }
+
+               _this.responsetimes = _this.responsetimes.slice( - _this.maxResponetimesStored );
+
+                if( response.statusCode == 200 ){
+                    callback.call( _this, body );
+                } else if( response.statusCode == 401 ){
+                    callback.call( _this, {
+                        status: 'failed',
+                        message: body.response.status.text
+                    });
+                }
             }
         });
     },

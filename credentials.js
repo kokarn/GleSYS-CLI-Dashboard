@@ -4,31 +4,48 @@ var readline = require( 'readline-sync' ),
     fs = require( 'fs' ),
     chalk = require( 'chalk' ),
     settingsPath = 'settings.js',
-    currentSettings,
-    updateSettings = true;
+    currentSettings = {},
+    updateSettings = false,
+    requiredSettings = {
+        glesysApiKey : 'What is your API key? ',
+        glesysAccount : 'What is your account id? ',
+        serverUsername : 'What server username should we use to connect? ',
+        serverPassword : 'What is the password for the accounts? ',
+        serverMainDomainname : 'What is the main domain for the servers? '
+    };
+
+function writeData( file ){
+    var key;
+
+    for( key in requiredSettings ){
+        currentSettings[ key ] = readline.question( requiredSettings[ key ] );
+    }
+
+    fs.write( file, 'module.exports = ' + JSON.stringify( currentSettings ) + ';', 'utf8', function( error, data ){
+        if( error ){
+            console.log( chalk.red( error ) );
+        } else {
+            console.log( chalk.green( 'Config vars saved to settings.js' ) );
+        }
+    });
+}
 
 try {
     currentSettings = require( './' + settingsPath );
-    if( currentSettings.glesysApiKey !== undefined && currentSettings.glesysAccount !== undefined && currentSettings.glesysApiKey.length > 0 && currentSettings.glesysAccount.length > 0 ){
+
+    for( var key in requiredSettings ){
+        if( currentSettings[ key ] === undefined || currentSettings[ key ].length <= 0 ){
+            updateSettings = true;
+            break;
+        }
+    }
+
+    if( !updateSettings ){
         console.log( chalk.green( 'Config data found already in settings.js' ) );
-        updateSettings = false;
     }
 } catch( error ){
-
-}
-
-function writeData( file ){
-    var apiKey = readline.question( 'What is your API key? ' ),
-        account = readline.question( 'What is your account id? ' );
-
-    fs.write( file, 'module.exports = { glesysApiKey: "' + apiKey + '", glesysAccount: "' + account + '"};', 'utf8', function( error, data ){
-            if( error ){
-                console.log( chalk.red( error ) );
-            } else {
-                console.log( chalk.green( 'Config vars saved to settings.js' ) );
-            }
-        }
-    );
+    // Failed to open settings.js, let's write some new settings
+    updateSettings = true;
 }
 
 if( updateSettings ){
