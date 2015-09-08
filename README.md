@@ -8,10 +8,8 @@
 ## Installing
 
 ```shell
-git clone https://github.com/kokarn/glesys-cli-dashboard.git
-cd glesys-cli-dashboard
-npm install
-node index.js
+npm install -g glesys-cli-dashboard
+glesys-cli-dashboard
 ```
 
 ## Requirements
