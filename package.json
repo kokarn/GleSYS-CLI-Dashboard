@@ -1,6 +1,6 @@
 {
   "name": "glesys-cli-dashboard",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A CLI dashboard for Glesys servers",
   "homepage": "https://github.com/kokarn/glesys-cli-dashboard",
   "main": "./lib/dashboard",
@@ -8,7 +8,8 @@
       "glesys-cli-dashboard": "./bin/dashboard"
   },
   "scripts": {
-    "install": "node lib/credentials.js"
+    "install": "node lib/credentials.js",
+    "preuninstall": "node lib/uninstall.js"
   },
   "repository": {
     "type": "git",
@@ -26,12 +27,12 @@
     "email": "kokarn@gmail.com"
   },
   "dependencies": {
-    "blessed": "^0.1.60",
-    "blessed-contrib": "^2.0.5",
-    "chalk": "^1.0.0",
-    "moment": "^2.10.3",
-    "readline-sync": "^1.2.15",
-    "request": "^2.55.0",
-    "ssh2": "^0.4.9"
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^2.3.3",
+    "chalk": "^1.1.1",
+    "moment": "^2.10.6",
+    "readline-sync": "^1.2.21",
+    "request": "^2.61.0",
+    "ssh2": "^0.4.11"
   }
 }
