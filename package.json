@@ -8,7 +8,8 @@
       "glesys-cli-dashboard": "./bin/dashboard"
   },
   "scripts": {
-    "install": "node lib/credentials.js"
+    "install": "node lib/credentials.js",
+    "preuninstall": "node lib/uninstall.js"
   },
   "repository": {
     "type": "git",
